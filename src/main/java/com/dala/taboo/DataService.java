@@ -1,5 +1,7 @@
 package com.dala.taboo;
 
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
 import lombok.extern.log4j.Log4j2;
 import org.apache.commons.io.IOUtils;
@@ -14,8 +16,8 @@ import java.util.zip.ZipFile;
 
 @Log4j2
 public class DataService {
-    static HashMap<String, String[]> data = new HashMap<>();
-    static ArrayList<TabooWord> words = new ArrayList<>();
+    static Map<String, ArrayList<String>> data = new HashMap<>();
+//    static ArrayList<TabooWord> words = new ArrayList<>();
 
     static ArrayList<InputStream> files = new ArrayList<>();
 
@@ -50,8 +52,13 @@ public class DataService {
                 contents = IOUtils.toString(is, StandardCharsets.UTF_8);
 //                System.out.println(contents);
 
-                HashMap<String, String[]> result = gson.fromJson(contents, HashMap.class);
+//                Map result = gson.fromJson(contents, Map.class);
+//                Map<String, String[]> result2 = new ObjectMapper().readValue(contents, HashMap.class);
+                Map<String, ArrayList<String>> result2 = new ObjectMapper().readValue(contents, HashMap.class);
+//                Map<String, String[]> typedMap = new ObjectMapper().readValue(contents, new TypeReference<Map<String, String[]>>() {});
 //                log.info("Result HM: " + result);
+                log.info("Result HM2: " + result2);
+//                log.info("Result HM3: " + typedMap);
 //
 //                ArrayList<String> keysAsArray = new ArrayList<>(result.keySet());
 //                log.info("Keys: " + keysAsArray);
@@ -61,7 +68,7 @@ public class DataService {
 //                }
 
 
-                data.putAll(result);
+                data.putAll(result2);
 //                System.out.println(data);
 
             } catch (IOException e) {
@@ -71,7 +78,7 @@ public class DataService {
         }
     }
 
-    public static ArrayList<String> getRandomWord() {
+    public static TabooWord getRandomWord() {
 
 //        log.info(words.get(rand.nextInt(words.size())).toString());
 
@@ -89,12 +96,17 @@ public class DataService {
 //        log.info("Key: " + key);
 //        log.info(data.get(key));
 //        log.info(data.get(key).getClass().getSimpleName());
-        String[] dataSet = data.get(key);
 
-        ArrayList<String> newWord = new ArrayList<>();
-        newWord.add(key);
-        Collections.addAll(newWord, dataSet);
+//        System.out.println(data.get(key));
 
-        return newWord;
+        ArrayList<String> dataSet = data.get(key);
+
+//        ArrayList<String> newWord = new ArrayList<>();
+//        newWord.add(key);
+//        Collections.addAll(newWord, dataSet);
+//
+//        return newWord;
+
+        return new TabooWord(key, dataSet.toArray(new String[0]));
     }
 }

@@ -3,6 +3,7 @@ package com.dala.taboo;
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.html.H2;
+import com.vaadin.flow.component.html.ListItem;
 import com.vaadin.flow.component.html.UnorderedList;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.router.Route;
@@ -12,7 +13,7 @@ import java.util.ArrayList;
 @Route(value = "game")
 public class GameView extends VerticalLayout {
 
-    ArrayList<String> currentWord = new ArrayList<>();
+    TabooWord currentWord;
     Button nextButton = new Button();
 
     H2 word = new H2();
@@ -40,11 +41,13 @@ public class GameView extends VerticalLayout {
 
         currentWord = DataService.getRandomWord();
 
-        word.setText(currentWord.get(0));
+        System.out.println(currentWord);
 
-        tabooWords = new UnorderedList();
-        for (int i = 1; i < currentWord.size(); i++) {
-            tabooWords.add(currentWord.get(i));
+        word.setText(currentWord.getWord());
+
+        tabooWords.removeAll();
+        for (int i = 0; i < currentWord.getTabooWords().length; i++) {
+            tabooWords.add(new ListItem(currentWord.getTabooWords()[i]));
         }
 
     }
