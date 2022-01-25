@@ -1,6 +1,7 @@
 package com.dala.taboo;
 
 import com.vaadin.flow.component.button.Button;
+import com.vaadin.flow.component.html.H3;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.upload.Upload;
 import com.vaadin.flow.component.upload.receivers.MultiFileMemoryBuffer;
@@ -12,6 +13,8 @@ import java.io.InputStream;
 
 @Route("")
 public class UploadView extends VerticalLayout {
+    Thread timer;
+    static H3 timeLeft = new H3();
 
     public UploadView() {
         MultiFileMemoryBuffer buffer = new MultiFileMemoryBuffer();
@@ -40,7 +43,7 @@ public class UploadView extends VerticalLayout {
         });
 
         Button toGame = new Button();
-        toGame.setText("Start Game!");
+        toGame.setText("Apply configuration");
 
 
         toGame.addClickListener(event -> {
@@ -56,4 +59,26 @@ public class UploadView extends VerticalLayout {
         ));
 
     }
+
+    /*public void startTimer() {
+        try {
+            timer.interrupt();
+        } catch (Exception ignore) { }
+        timer = new Thread(new TimeManagement(12, timeLeft, getUI().orElse(null), this));
+        timer.start();
+
+//        synchronized (timer) {
+//            System.out.println("Timer finished");
+//            try {
+//                timer.wait();
+//                System.out.println("The Timer wait has finished!");
+//            } catch (InterruptedException e) {
+//                e.printStackTrace();
+//            }
+//        }
+
+        // System.out.println("Wait finished!");
+
+        //    timeLeft.setText("Time is up!!!");
+    }*/
 }

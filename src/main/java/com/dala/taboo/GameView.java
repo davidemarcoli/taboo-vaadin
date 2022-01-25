@@ -34,18 +34,21 @@ public class GameView extends VerticalLayout {
 
 //        countDown(10);
 
-        newWord();
-
-        nextButton.setText("Next Word!");
+        nextButton.setText("Start game");
 
         nextButton.addClickListener(event -> {
             newWord();
             startTimer();
+            nextButton.setText("Next word");
         });
 
         add(word, tabooWords, nextButton, timeLeft);
 
         System.out.println("It should now all be added!");
+
+        //startTimer();
+//        if (this.getUI().isPresent())
+//            this.getUI().get().addAttachListener(event -> startTimer());
     }
 
     public void startTimer() {
