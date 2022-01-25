@@ -28,7 +28,7 @@ public class TimeManagement implements Runnable {
         System.out.println("Timer started");
         start = now();
 
-        end = start.plusSeconds(12);
+        end = start.plusSeconds(ConfigurationService.roundLength);
 
         System.out.println("Start: " + start);
         System.out.println("End: " + end);
@@ -36,12 +36,13 @@ public class TimeManagement implements Runnable {
         while (now().isBefore(end)/*&& !QuizManager.enteredAnswer*/) {
             try {
                 Thread.sleep(100);
-            } catch (InterruptedException ignored) {}
+
             //GameView.timeLeft.setText(String.valueOf(end.toSecondOfDay() - now().toSecondOfDay()));
             ui.access(() -> {
                 gameView.timeLeft.setText(String.valueOf(end.toSecondOfDay() - now().toSecondOfDay()) + " seconds left");
                 //gameView.timeLeft.setText(String.format("%1$3s", end.toSecondOfDay() - now().toSecondOfDay()) + " seconds left");
             });
+            } catch (InterruptedException ignored) {}
         }
 
         System.out.println("Timer ended");

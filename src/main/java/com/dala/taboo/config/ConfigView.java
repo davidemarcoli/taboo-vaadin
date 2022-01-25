@@ -1,5 +1,6 @@
 package com.dala.taboo.config;
 
+import com.dala.taboo.ConfigurationService;
 import com.dala.taboo.DataService;
 import com.vaadin.flow.component.Text;
 import com.vaadin.flow.component.button.Button;
@@ -50,6 +51,7 @@ public class ConfigView extends VerticalLayout {
 
         applyButton.setText("Apply Configuration");
         applyButton.addClickListener(event -> {
+            ConfigurationService.roundLength = paperSlider.getValue();
             DataService.insertWords(categorySelect.getValue(), languageSelect.getValue());
             applyButton.getUI().ifPresent(ui -> ui.navigate("game"));
         });
