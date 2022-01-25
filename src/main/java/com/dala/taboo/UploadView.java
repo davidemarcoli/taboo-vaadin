@@ -14,6 +14,8 @@ import java.io.InputStream;
 public class UploadView extends VerticalLayout {
 
     public UploadView() {
+        style();
+
         MultiFileMemoryBuffer buffer = new MultiFileMemoryBuffer();
         Upload upload = new Upload(buffer);
         upload.setAcceptedFileTypes("application/zip", "application/json");
@@ -55,5 +57,15 @@ public class UploadView extends VerticalLayout {
                 toGame
         ));
 
+    }
+
+    private void style() {
+        setSizeFull();
+        setJustifyContentMode(JustifyContentMode.CENTER);
+        setDefaultHorizontalComponentAlignment(Alignment.CENTER);
+        setAlignItems(Alignment.CENTER);
+        setHorizontalComponentAlignment(Alignment.CENTER);
+
+        getStyle().set("text-align", "center");
     }
 }

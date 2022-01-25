@@ -8,8 +8,6 @@ import com.vaadin.flow.component.html.UnorderedList;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.router.Route;
 
-import java.util.ArrayList;
-
 @Route(value = "game")
 public class GameView extends VerticalLayout {
 
@@ -25,6 +23,8 @@ public class GameView extends VerticalLayout {
             UI.getCurrent().getPage().reload();
             return;
         }
+
+        style();
 
         newWord();
 
@@ -50,5 +50,16 @@ public class GameView extends VerticalLayout {
             tabooWords.add(new ListItem(currentWord.getTabooWords()[i]));
         }
 
+    }
+
+    private void style() {
+        setSizeFull();
+        setJustifyContentMode(JustifyContentMode.CENTER);
+        setDefaultHorizontalComponentAlignment(Alignment.CENTER);
+        setAlignItems(Alignment.CENTER);
+
+        getStyle().set("text-align", "center");
+
+        tabooWords.getStyle().set("text-align", "left");
     }
 }
