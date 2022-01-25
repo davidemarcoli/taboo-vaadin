@@ -45,8 +45,8 @@ public class GameView extends VerticalLayout {
 
         skipButton.addClickListener(event -> {
             newWord();
-            startTimer();
             if (skipButton.getText().contains("Start")) {
+                startTimer();
                 correctWords.setText("Correct Words: " + GameState.correctWords);
                 correctWords.setVisible(true);
                 skippedWords.setVisible(true);
@@ -69,7 +69,6 @@ public class GameView extends VerticalLayout {
 
         correctButton.addClickListener(event -> {
             newWord();
-            startTimer();
             GameState.correctWords++;
             correctWords.setText("Correct Words: " + GameState.correctWords);
         });

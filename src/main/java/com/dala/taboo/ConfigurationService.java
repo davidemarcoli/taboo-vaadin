@@ -8,5 +8,17 @@ import java.util.ArrayList;
  **/
 public class ConfigurationService {
     public static int roundLength = 60;
+    public static Team team1 = new Team();
+    public static Team team2 = new Team();
 
+    public static void addPersonsToTeam(Team team, String players) {
+        String[] splittedPlayers = players.split(",");
+
+        for (String player: splittedPlayers) {
+            team.getListOfUsers().add(new Person(player.trim()));
+        }
+
+        System.out.println(team1.getListOfUsers().toString());
+        System.out.println(team2.getListOfUsers().toString());
+    }
 }

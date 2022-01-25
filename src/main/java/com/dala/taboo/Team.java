@@ -9,11 +9,15 @@ import java.util.ArrayList;
 public class Team {
     private ArrayList<Person> listOfUsers = new ArrayList<>();
     private int score = 0;
+    private String teamName = "";
 
-    public Team(ArrayList<Person> listOfUsers, int score) {
+    public Team(ArrayList<Person> listOfUsers, int score, String teamName) {
         this.listOfUsers = listOfUsers;
         this.score = score;
+        this.teamName = teamName;
     }
+
+    public Team() {}
 
     public ArrayList<Person> getListOfUsers() {
         return listOfUsers;
@@ -29,5 +33,13 @@ public class Team {
 
     public void setScore(int score) {
         this.score = score;
+    }
+
+    public String getTeamName() {
+        return teamName;
+    }
+
+    public void setTeamName(String teamName) {
+        this.teamName = teamName;
     }
 }
