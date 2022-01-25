@@ -1,3 +1,9 @@
+# Taboo project - Lazar & Davide
+
+[Figma sketch](https://www.figma.com/file/oQvgs21FXPOLCQx47sUa1s/Taboo?node-id=0%3A1)
+
+--------------------------------------------------------------------------------------------------
+
 # Project Base for Vaadin and Spring Boot
 
 This project can be used as a starting point to create your own Vaadin application with Spring Boot.

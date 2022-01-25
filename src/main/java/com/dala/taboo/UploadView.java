@@ -17,6 +17,8 @@ public class UploadView extends VerticalLayout {
     static H3 timeLeft = new H3();
 
     public UploadView() {
+        style();
+
         MultiFileMemoryBuffer buffer = new MultiFileMemoryBuffer();
         Upload upload = new Upload(buffer);
         upload.setAcceptedFileTypes("application/zip", "application/json");
@@ -60,25 +62,13 @@ public class UploadView extends VerticalLayout {
 
     }
 
-    /*public void startTimer() {
-        try {
-            timer.interrupt();
-        } catch (Exception ignore) { }
-        timer = new Thread(new TimeManagement(12, timeLeft, getUI().orElse(null), this));
-        timer.start();
+    private void style() {
+        setSizeFull();
+        setJustifyContentMode(JustifyContentMode.CENTER);
+        setDefaultHorizontalComponentAlignment(Alignment.CENTER);
+        setAlignItems(Alignment.CENTER);
+        setHorizontalComponentAlignment(Alignment.CENTER);
 
-//        synchronized (timer) {
-//            System.out.println("Timer finished");
-//            try {
-//                timer.wait();
-//                System.out.println("The Timer wait has finished!");
-//            } catch (InterruptedException e) {
-//                e.printStackTrace();
-//            }
-//        }
-
-        // System.out.println("Wait finished!");
-
-        //    timeLeft.setText("Time is up!!!");
-    }*/
+        getStyle().set("text-align", "center");
+    }
 }

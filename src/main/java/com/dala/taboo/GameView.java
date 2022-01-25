@@ -32,7 +32,9 @@ public class GameView extends VerticalLayout {
             return;
         }
 
-//        countDown(10);
+      
+        style();
+
 
         nextButton.setText("Start game");
 
@@ -85,5 +87,16 @@ public class GameView extends VerticalLayout {
         for (int i = 0; i < currentWord.getTabooWords().length; i++) {
             tabooWords.add(new ListItem(currentWord.getTabooWords()[i]));
         }
+    }
+
+    private void style() {
+        setSizeFull();
+        setJustifyContentMode(JustifyContentMode.CENTER);
+        setDefaultHorizontalComponentAlignment(Alignment.CENTER);
+        setAlignItems(Alignment.CENTER);
+
+        getStyle().set("text-align", "center");
+
+        tabooWords.getStyle().set("text-align", "left");
     }
 }
