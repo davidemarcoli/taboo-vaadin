@@ -52,7 +52,7 @@ public class UploadView extends VerticalLayout {
 //            UI.getCurrent().navigate(GameView.class);
 
             DataService.printAll();
-            toGame.getUI().ifPresent(ui -> ui.navigate("game"));
+            toGame.getUI().ifPresent(ui -> ui.navigate("config"));
         });
 
         add(new VerticalLayout(

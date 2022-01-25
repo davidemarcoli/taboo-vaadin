@@ -1,26 +1,26 @@
 package com.dala.taboo;
 
+import com.dala.taboo.config.ConfigView;
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.button.Button;
-import com.vaadin.flow.component.html.H2;
-import com.vaadin.flow.component.html.H3;
-import com.vaadin.flow.component.html.ListItem;
-import com.vaadin.flow.component.html.UnorderedList;
+import com.vaadin.flow.component.html.*;
 import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.notification.NotificationVariant;
+import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.page.Push;
 import com.vaadin.flow.router.Route;
-
-import java.util.ArrayList;
-import java.util.Timer;
 
 @Push
 @Route(value = "game")
 public class GameView extends VerticalLayout {
     static H3 timeLeft = new H3();
     TabooWord currentWord;
-    Button nextButton = new Button();
+    Button skipButton = new Button();
+    Button correctButton = new Button();
+
+    Paragraph correctWords = new Paragraph("0");
+    Paragraph skippedWords = new Paragraph("0");
 
     H2 word = new H2();
     UnorderedList tabooWords = new UnorderedList();
@@ -31,24 +31,50 @@ public class GameView extends VerticalLayout {
 
     public GameView() {
         if (DataService.data.size() < 1) {
-            UI.getCurrent().navigate(UploadView.class);
+            UI.getCurrent().navigate(ConfigView.class);
             UI.getCurrent().getPage().reload();
             return;
         }
 
-      
+        GameState.skippedWords = 0;
+        GameState.correctWords = 0;
+
         style();
 
+        skipButton.setText("Start game");
 
-        nextButton.setText("Start game");
-
-        nextButton.addClickListener(event -> {
+        skipButton.addClickListener(event -> {
             newWord();
             startTimer();
-            nextButton.setText("Next word");
+            if (skipButton.getText().contains("Start")) {
+                correctWords.setText("Correct Words: " + GameState.correctWords);
+                correctWords.setVisible(true);
+                skippedWords.setVisible(true);
+                skipButton.setText("Next word");
+                correctButton.setVisible(true);
+            } else {
+                GameState.skippedWords++;
+            }
+            skippedWords.setText("Skipped Words: " + GameState.skippedWords);
         });
 
-        add(word, tabooWords, nextButton, timeLeft);
+        correctWords.setVisible(false);
+        skippedWords.setVisible(false);
+
+        correctButton.setText("Correct");
+        correctButton.setVisible(false);
+        correctButton.getStyle().set("background-color", "green");
+        correctButton.getStyle().set("color", "black");
+        correctButton.getStyle().set("font-weight", "700");
+
+        correctButton.addClickListener(event -> {
+            newWord();
+            startTimer();
+            GameState.correctWords++;
+            correctWords.setText("Correct Words: " + GameState.correctWords);
+        });
+
+        add(word, tabooWords, new HorizontalLayout(skipButton, correctButton), timeLeft, correctWords, skippedWords);
 
         System.out.println("It should now all be added!");
 
@@ -61,7 +87,7 @@ public class GameView extends VerticalLayout {
         try {
             timer.interrupt();
         } catch (Exception ignore) { }
-        timer = new Thread(new TimeManagement(12, timeLeft, getUI().orElse(null), this));
+        timer = new Thread(new TimeManagement(20, timeLeft, getUI().get(), this));
         timer.start();
 
 //        synchronized (timer) {
