@@ -5,6 +5,8 @@ import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.html.H2;
 import com.vaadin.flow.component.html.ListItem;
 import com.vaadin.flow.component.html.UnorderedList;
+import com.vaadin.flow.component.notification.Notification;
+import com.vaadin.flow.component.notification.NotificationVariant;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.router.Route;
 
@@ -17,8 +19,10 @@ public class GameView extends VerticalLayout {
     H2 word = new H2();
     UnorderedList tabooWords = new UnorderedList();
 
+    Notification notification = new Notification();
+
     public GameView() {
-        if (DataService.files.size() < 1) {
+        if (DataService.data.size() < 1) {
             UI.getCurrent().navigate(UploadView.class);
             UI.getCurrent().getPage().reload();
             return;
@@ -42,6 +46,15 @@ public class GameView extends VerticalLayout {
         currentWord = DataService.getRandomWord();
 
         System.out.println(currentWord);
+
+        if (currentWord == null) {
+            getUI().ifPresent(event -> {
+                notification = Notification.show("All words shown!", 5000, Notification.Position.BOTTOM_CENTER);
+                notification.addThemeVariants(NotificationVariant.LUMO_PRIMARY);
+                getUI().get().navigate("config");
+            });
+            return;
+        }
 
         word.setText(currentWord.getWord());
 
