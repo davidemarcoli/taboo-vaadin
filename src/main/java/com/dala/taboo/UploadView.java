@@ -11,7 +11,7 @@ import java.io.IOException;
 import java.io.InputStream;
 
 
-@Route("")
+@Route("upload")
 public class UploadView extends VerticalLayout {
     Thread timer;
     static H3 timeLeft = new H3();

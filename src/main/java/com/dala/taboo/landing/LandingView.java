@@ -10,7 +10,7 @@ import org.springframework.beans.factory.annotation.Value;
  * Created by lazar on 1/25/2022.
  * Project name: taboo-vaadin
  **/
-@Route(value = "landing")
+@Route(value = "")
 public class LandingView extends VerticalLayout {
     H1 word = new H1("Taboo");
     Button configBtn = new Button();
@@ -23,6 +23,9 @@ public class LandingView extends VerticalLayout {
         configBtn.setText("CONFIGURE GAME");
 
         configBtn.addClickListener(event -> {
+            configBtn.getUI().ifPresent(ui -> {
+                ui.navigate("config");
+            });
         });
     }
 
