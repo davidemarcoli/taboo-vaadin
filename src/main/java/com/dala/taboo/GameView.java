@@ -26,6 +26,8 @@ public class GameView extends VerticalLayout {
             return;
         }
 
+        style();
+
         newWord();
 
         nextButton.setText("Next Word!");
@@ -50,5 +52,14 @@ public class GameView extends VerticalLayout {
             tabooWords.add(new ListItem(currentWord.getTabooWords()[i]));
         }
 
+    }
+
+    private void style() {
+        setSizeFull();
+        setJustifyContentMode(JustifyContentMode.CENTER);
+        setDefaultHorizontalComponentAlignment(Alignment.CENTER);
+        setAlignItems(Alignment.CENTER);
+
+        getStyle().set("text-align", "center");
     }
 }
