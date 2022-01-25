@@ -64,6 +64,7 @@ public class UploadView extends VerticalLayout {
         setJustifyContentMode(JustifyContentMode.CENTER);
         setDefaultHorizontalComponentAlignment(Alignment.CENTER);
         setAlignItems(Alignment.CENTER);
+        setHorizontalComponentAlignment(Alignment.CENTER);
 
         getStyle().set("text-align", "center");
     }
