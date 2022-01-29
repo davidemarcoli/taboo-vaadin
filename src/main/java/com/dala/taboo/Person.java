@@ -1,5 +1,6 @@
 package com.dala.taboo;
 
+import lombok.Data;
 import lombok.ToString;
 
 /**
@@ -8,18 +9,23 @@ import lombok.ToString;
  **/
 
 @ToString
+@Data
 public class Person {
     private String username;
+    private int score;
+    private int rounds;
 
     public Person(String username) {
         this.username = username;
+        this.score = 0;
+        this.rounds = 0;
     }
 
-    public String getUsername() {
-        return username;
+    public void addScore() {
+        this.score++;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void addRound() {
+        this.rounds++;
     }
 }

@@ -2,6 +2,7 @@ package com.dala.taboo;
 
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.html.H3;
+import lombok.SneakyThrows;
 
 import java.time.LocalTime;
 
@@ -22,6 +23,7 @@ public class TimeManagement implements Runnable {
     static int timerLength;
     static H3 text;
 
+    @SneakyThrows
     @Override
     public void run() {
 
@@ -50,6 +52,13 @@ public class TimeManagement implements Runnable {
         ui.access(() -> {
             gameView.timeLeft.setText("Timer ended!");
         });
+
+        ui.access(() -> {
+            gameView.navigate("queue");
+        } );
+
+
+
 
         synchronized (this) {
             System.out.println("Timer synchronized");

@@ -69,11 +69,11 @@ public class ConfigView extends VerticalLayout {
 
         applyButton.setText("Apply Configuration");
         applyButton.addClickListener(event -> {
-            ConfigurationService.addPersonsToTeam(ConfigurationService.team1, teamOne.getValue(), "team1");
-            ConfigurationService.addPersonsToTeam(ConfigurationService.team2, teamTwo.getValue(), "team2");
+            ConfigurationService.addPersonsToTeam(0, teamOne.getValue(), "Team 1");
+            ConfigurationService.addPersonsToTeam(1, teamTwo.getValue(), "Team 2");
             ConfigurationService.roundLength = paperSlider.getValue();
             DataService.insertWords(categorySelect.getValue(), languageSelect.getValue());
-            applyButton.getUI().ifPresent(ui -> ui.navigate("game"));
+            applyButton.getUI().ifPresent(ui -> ui.navigate("queue"));
         });
         add(applyButton);
 
