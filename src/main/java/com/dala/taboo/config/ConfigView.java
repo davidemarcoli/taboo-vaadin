@@ -14,10 +14,8 @@ import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.router.Route;
 import org.vaadin.addon.sliders.PaperSlider;
 
-
 @Route(value = "config")
 public class ConfigView extends VerticalLayout {
-
     H1 title = new H1();
     PaperSlider paperSlider = new PaperSlider(30, 120, 60);
     Text timePerRoundText = new Text("60");
@@ -71,8 +69,8 @@ public class ConfigView extends VerticalLayout {
 
         applyButton.setText("Apply Configuration");
         applyButton.addClickListener(event -> {
-            ConfigurationService.addPersonsToTeam(ConfigurationService.team1, teamOne.getValue());
-            ConfigurationService.addPersonsToTeam(ConfigurationService.team2, teamTwo.getValue());
+            ConfigurationService.addPersonsToTeam(ConfigurationService.team1, teamOne.getValue(), "team1");
+            ConfigurationService.addPersonsToTeam(ConfigurationService.team2, teamTwo.getValue(), "team2");
             ConfigurationService.roundLength = paperSlider.getValue();
             DataService.insertWords(categorySelect.getValue(), languageSelect.getValue());
             applyButton.getUI().ifPresent(ui -> ui.navigate("game"));

@@ -18,15 +18,11 @@ public class GameView extends VerticalLayout {
     TabooWord currentWord;
     Button skipButton = new Button();
     Button correctButton = new Button();
-
     Paragraph correctWords = new Paragraph("0");
     Paragraph skippedWords = new Paragraph("0");
-
     H2 word = new H2();
     UnorderedList tabooWords = new UnorderedList();
-
     Notification notification = new Notification();
-
     Thread timer;
 
     public GameView() {
@@ -35,16 +31,20 @@ public class GameView extends VerticalLayout {
             UI.getCurrent().getPage().reload();
             return;
         }
-
         GameState.skippedWords = 0;
         GameState.correctWords = 0;
-
+        newWord();
         style();
 
-        skipButton.setText("Start game");
+        skipButton.setText("Next word");
+        skippedWords.setText("Skipped Words: 0");
 
         skipButton.addClickListener(event -> {
             newWord();
+            GameState.skippedWords++;
+            skippedWords.setText("Skipped Words: " + GameState.skippedWords);
+
+            /*
             if (skipButton.getText().contains("Start")) {
                 startTimer();
                 correctWords.setText("Correct Words: " + GameState.correctWords);
@@ -54,19 +54,18 @@ public class GameView extends VerticalLayout {
                 correctButton.setVisible(true);
             } else {
                 GameState.skippedWords++;
-            }
-            skippedWords.setText("Skipped Words: " + GameState.skippedWords);
+            }*/
         });
 
-        correctWords.setVisible(false);
-        skippedWords.setVisible(false);
-
+        //correctWords.setVisible(false);
+        //skippedWords.setVisible(false);
         correctButton.setText("Correct");
-        correctButton.setVisible(false);
+        correctWords.setText("Correct Words: " + GameState.correctWords);
+
+        //correctButton.setVisible(false);
         correctButton.getStyle().set("background-color", "green");
         correctButton.getStyle().set("color", "black");
         correctButton.getStyle().set("font-weight", "700");
-
         correctButton.addClickListener(event -> {
             newWord();
             GameState.correctWords++;
@@ -74,12 +73,7 @@ public class GameView extends VerticalLayout {
         });
 
         add(word, tabooWords, new HorizontalLayout(skipButton, correctButton), timeLeft, correctWords, skippedWords);
-
         System.out.println("It should now all be added!");
-
-        //startTimer();
-//        if (this.getUI().isPresent())
-//            this.getUI().get().addAttachListener(event -> startTimer());
     }
 
     public void startTimer() {
@@ -88,28 +82,11 @@ public class GameView extends VerticalLayout {
         } catch (Exception ignore) { }
         timer = new Thread(new TimeManagement(20, timeLeft, getUI().get(), this));
         timer.start();
-
-//        synchronized (timer) {
-//            System.out.println("Timer finished");
-//            try {
-//                timer.wait();
-//                System.out.println("The Timer wait has finished!");
-//            } catch (InterruptedException e) {
-//                e.printStackTrace();
-//            }
-//        }
-
-       // System.out.println("Wait finished!");
-
-    //    timeLeft.setText("Time is up!!!");
     }
 
     public void newWord() {
-
         currentWord = DataService.getRandomWord();
-
         System.out.println(currentWord);
-
         if (currentWord == null) {
             getUI().ifPresent(event -> {
                 notification = Notification.show("All words shown!", 5000, Notification.Position.BOTTOM_CENTER);
@@ -120,7 +97,6 @@ public class GameView extends VerticalLayout {
         }
 
         word.setText(currentWord.getWord());
-
         tabooWords.removeAll();
         for (int i = 0; i < currentWord.getTabooWords().length; i++) {
             tabooWords.add(new ListItem(currentWord.getTabooWords()[i]));
@@ -132,9 +108,7 @@ public class GameView extends VerticalLayout {
         setJustifyContentMode(JustifyContentMode.CENTER);
         setDefaultHorizontalComponentAlignment(Alignment.CENTER);
         setAlignItems(Alignment.CENTER);
-
         getStyle().set("text-align", "center");
-
         tabooWords.getStyle().set("text-align", "left");
     }
 }
