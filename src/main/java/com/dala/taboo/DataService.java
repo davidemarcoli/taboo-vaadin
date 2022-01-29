@@ -37,7 +37,7 @@ public class DataService {
 
         Enumeration<? extends ZipEntry> entries = zipFile.entries();
 
-        while(entries.hasMoreElements()){
+        while (entries.hasMoreElements()) {
             ZipEntry entry = entries.nextElement();
 
             if (entry.isDirectory()) {
@@ -51,10 +51,20 @@ public class DataService {
 
     @SneakyThrows
     public static String[] getAllCategories() {
-        InputStream in = DataService.class.getClassLoader().getResourceAsStream("classpath:data/de");
-        File dir2 = ResourceUtils.getFile("classpath:data/de");
-        File dir = new File("classpath:data/de");
-        String[] fileNames = getFiles(Objects.requireNonNull(dir2.listFiles()));
+//        InputStream in = DataService.class.getClassLoader().getResourceAsStream("classpath:data" + File.separator + "de");
+
+//        InputStream is = DataService.class.getResourceAsStream("3Columns.csv");
+//        InputStreamReader isr = new InputStreamReader(is);
+//        BufferedReader br = new BufferedReader(isr);
+
+//        File dir = ResourceUtils.getFile("classpath:data" + File.separator + "de");
+
+//        File dir = new File(Objects.requireNonNull(DataService.class.getResource("data" + File.separator + "de")).toURI());
+
+//        File dir = new File("classpath:data/de");
+        File dir = ResourceUtils.getFile("classpath:data/de");
+
+        String[] fileNames = getFiles(Objects.requireNonNull(dir.listFiles()));
         System.out.println(Arrays.toString(fileNames));
         return fileNames;
     }
@@ -102,7 +112,7 @@ public class DataService {
 
     @SneakyThrows
     public static void insertWords(String category, String language) {
-        File file = ResourceUtils.getFile("classpath:data/" + language.toLowerCase() + "/" + category.toLowerCase() + ".json");
+        File file = ResourceUtils.getFile("classpath:data" + File.separator + language.toLowerCase() + File.separator + category.toLowerCase() + ".json");
 
         byte[] encoded = Files.readAllBytes(file.toPath());
         String contents = new String(encoded, Charset.defaultCharset());

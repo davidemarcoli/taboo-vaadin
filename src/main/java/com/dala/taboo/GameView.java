@@ -34,7 +34,8 @@ public class GameView extends VerticalLayout {
         GameState.skippedWords = 0;
         GameState.correctWords = 0;
         newWord();
-        style();
+
+        ConfigurationService.teams.get(ConfigurationService.currentTeamIndex).getListOfUsers().get(ConfigurationService.teams.get(ConfigurationService.currentTeamIndex).getPersonIndex()).addRound();
 
         skipButton.setText("Next word");
         skippedWords.setText("Skipped Words: 0");
@@ -70,18 +71,29 @@ public class GameView extends VerticalLayout {
             newWord();
             GameState.correctWords++;
             correctWords.setText("Correct Words: " + GameState.correctWords);
+            ConfigurationService.teams.get(ConfigurationService.currentTeamIndex).getListOfUsers().get(ConfigurationService.teams.get(ConfigurationService.currentTeamIndex).getPersonIndex()).addScore();
+            ConfigurationService.teams.get(ConfigurationService.currentTeamIndex).setScore(ConfigurationService.teams.get(ConfigurationService.currentTeamIndex).getScore() + 1);
         });
 
         add(word, tabooWords, new HorizontalLayout(skipButton, correctButton), timeLeft, correctWords, skippedWords);
         System.out.println("It should now all be added!");
+
+        style();
+
+        startTimer();
     }
 
     public void startTimer() {
         try {
             timer.interrupt();
         } catch (Exception ignore) { }
-        timer = new Thread(new TimeManagement(20, timeLeft, getUI().get(), this));
+        timer = new Thread(new TimeManagement(ConfigurationService.roundLength, timeLeft, UI.getCurrent(), this));
         timer.start();
+    }
+
+    public void navigate(String location) {
+        System.out.println("Navigating to " + location);
+        UI.getCurrent().navigate(location);
     }
 
     public void newWord() {
