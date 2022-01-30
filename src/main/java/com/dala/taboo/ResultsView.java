@@ -3,6 +3,7 @@ package com.dala.taboo;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.html.H1;
+import com.vaadin.flow.component.html.H3;
 import com.vaadin.flow.component.html.Span;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
@@ -68,7 +69,10 @@ public class ResultsView extends VerticalLayout {
 
             grid.setItems(List.of(team.getListOfUsers().toArray(new Person[0])));
 
-            gridLayout.add(grid);
+            H3 teamName = new H3();
+            teamName.setText(team.getTeamName());
+
+            gridLayout.add(new VerticalLayout(teamName, grid));
         }
 
         gridLayout.setSizeFull();
@@ -77,17 +81,17 @@ public class ResultsView extends VerticalLayout {
         style();
     }
 
-    private String getWinnerTeam() {
-        Team winnerTeam = ConfigurationService.teams.get(0);
-
-        for (int i = 1; i < ConfigurationService.teams.size(); i++) {
-            if (winnerTeam.getScore() > ConfigurationService.teams.get(i).getScore()) {
-                winnerTeam = ConfigurationService.teams.get(i);
-            }
-        }
-
-        return winnerTeam.getTeamName();
-    }
+//    private String getWinnerTeam() {
+//        Team winnerTeam = ConfigurationService.teams.get(0);
+//
+//        for (int i = 1; i < ConfigurationService.teams.size(); i++) {
+//            if (winnerTeam.getScore() > ConfigurationService.teams.get(i).getScore()) {
+//                winnerTeam = ConfigurationService.teams.get(i);
+//            }
+//        }
+//
+//        return winnerTeam.getTeamName();
+//    }
 
     private final SerializableBiConsumer<Span, Person> statusComponentUpdater = (span, person) -> {
         boolean isMVP = mvps.contains(person);

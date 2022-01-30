@@ -21,14 +21,25 @@ public class Person {
         this.rounds = 0;
     }
 
+    /**
+     * This method is used to add points to the person.
+     */
     public void addScore() {
         this.score++;
     }
 
+    /**
+     * This method is used to add rounds to the person.
+     */
     public void addRound() {
         this.rounds++;
     }
 
+
+    /**
+     * This method is used to get the the average points per round.
+     * @return the average points per round.
+     */
     public double getAveragePointsPerRound() {
         return (double) this.score / (double) this.rounds;
     }

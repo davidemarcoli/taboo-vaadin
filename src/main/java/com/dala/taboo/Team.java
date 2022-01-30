@@ -25,14 +25,24 @@ public class Team {
         this.teamName = teamName;
     }
 
+    /**
+     * This method is used to add score to the team
+     */
     public void addScore() {
         this.score++;
     }
 
+    /**
+     * This method is used to add round to the team
+     */
     public void addRound() {
         this.rounds++;
     }
 
+    /**
+     * This method is used to get the the average points per round.
+     * @return the average points per round.
+     */
     public double getAveragePointsPerRound() {
         return (double) this.score / (double) this.rounds;
     }

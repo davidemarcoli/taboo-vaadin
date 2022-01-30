@@ -42,6 +42,11 @@ public class DataService {
         }
     }
 
+    /**
+     * This method gets all categories in the dataset.
+     * @return An array of Strings with the category names.
+     */
+
     @SneakyThrows
     public static String[] getAllCategories() {
         File dir = ResourceUtils.getFile("classpath:data/de");
@@ -51,6 +56,11 @@ public class DataService {
         return fileNames;
     }
 
+    /**
+     * This method gets all languages that are present in the dataset.
+     * @return An array of Strings with the language names.
+     */
+
     @SneakyThrows
     public static String[] getAllLanguages() {
         File dir = ResourceUtils.getFile("classpath:data");
@@ -58,6 +68,12 @@ public class DataService {
         System.out.println(Arrays.toString(folderNames));
         return folderNames;
     }
+
+    /**
+     * This method gets all files in the File Objects.
+     * @param files The Folders to get the files from.
+     * @return An array of Strings with the file names.
+     */
 
     public static String[] getFiles(File[] files) {
         ArrayList<String> filesNames = new ArrayList<>();
@@ -75,6 +91,12 @@ public class DataService {
         return filesNames.toArray(new String[0]);
     }
 
+    /**
+     * This method gets all Folders in the File Objects.
+     * @param files The files to get the folders from.
+     * @return An array of Strings with the folder names.
+     */
+
     public static String[] getFolders(File[] files) {
         ArrayList<String> folderNames = new ArrayList<>();
 
@@ -88,6 +110,12 @@ public class DataService {
         return folderNames.toArray(new String[0]);
     }
 
+    /**
+     * This method loads the data from the files and stores it in a map.
+     * @param category The category to load.
+     * @param language The language to load.
+     */
+
     @SneakyThrows
     public static void insertWords(String category, String language) {
         File file = ResourceUtils.getFile("classpath:data" + File.separator + language.toLowerCase() + File.separator + category.toLowerCase() + ".json");
@@ -99,6 +127,11 @@ public class DataService {
         log.info("Result HM: " + result);
         data.putAll(result);
     }
+
+    /**
+     * This method is for Dev purposes only.
+     * It prints all the words in the data folder.
+     */
 
     public static void printAll() {
         for (InputStream is : files) {
@@ -115,6 +148,11 @@ public class DataService {
             }
         }
     }
+
+    /**
+     * This method returns a random word from the list of words.
+     * @return a random word from the list of words.
+     */
 
     public static TabooWord getRandomWord() {
         if (data.size() > 0) {
