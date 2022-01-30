@@ -59,7 +59,6 @@ public class UploadView extends VerticalLayout {
                 upload,
                 toGame
         ));
-
     }
 
     private void style() {

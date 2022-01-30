@@ -15,6 +15,8 @@ public class ConfigurationService {
     public static ArrayList<Team> teams = new ArrayList<>(List.of(new Team[]{new Team(), new Team()}));
     public static int currentTeamIndex = -1;
 
+    public static boolean customGame = false;
+
     private static final Random rand = new Random();
 
     public static void addPersonsToTeam(int teamIndex, String players, String teamName) {

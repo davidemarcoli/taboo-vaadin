@@ -1,10 +1,10 @@
 package com.dala.taboo.landing;
 
+import com.dala.taboo.ConfigurationService;
+import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.html.H1;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.router.Route;
-import com.vaadin.flow.component.button.Button;
-import org.springframework.beans.factory.annotation.Value;
 
 /**
  * Created by lazar on 1/25/2022.
@@ -14,17 +14,29 @@ import org.springframework.beans.factory.annotation.Value;
 public class LandingView extends VerticalLayout {
     H1 word = new H1("Taboo");
     Button configBtn = new Button();
+    Button customBtn = new Button();
 
     public LandingView() {
         style();
-        add(word, configBtn);
+        add(word, configBtn, customBtn);
 
 
         configBtn.setText("CONFIGURE GAME");
 
         configBtn.addClickListener(event -> {
             configBtn.getUI().ifPresent(ui -> {
+                ConfigurationService.customGame = false;
                 ui.navigate("config");
+            });
+        });
+
+
+        customBtn.setText("CUSTOM GAME");
+
+        customBtn.addClickListener(event -> {
+            customBtn.getUI().ifPresent(ui -> {
+                ConfigurationService.customGame = true;
+                ui.navigate("upload");
             });
         });
     }
