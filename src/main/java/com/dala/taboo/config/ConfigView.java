@@ -23,7 +23,7 @@ import java.util.List;
 @Route(value = "config")
 public class ConfigView extends VerticalLayout {
     H1 title = new H1();
-    PaperSlider paperSlider = new PaperSlider(30, 120, 60);
+    PaperSlider paperSlider = new PaperSlider(5, 120, 60);
     Text timePerRoundText = new Text("60");
     TextField teamOne = new TextField();
     TextField teamTwo = new TextField();
@@ -93,7 +93,10 @@ public class ConfigView extends VerticalLayout {
             ConfigurationService.addPersonsToTeam(0, teamOne.getValue(), "Team 1");
             ConfigurationService.addPersonsToTeam(1, teamTwo.getValue(), "Team 2");
             ConfigurationService.roundLength = paperSlider.getValue();
-            DataService.insertWords(categorySelect.getValue(), languageSelect.getValue());
+
+            if (!ConfigurationService.customGame)
+                DataService.insertWords(categorySelect.getValue(), languageSelect.getValue());
+
             applyButton.getUI().ifPresent(ui -> ui.navigate("queue"));
         });
         add(applyButton);

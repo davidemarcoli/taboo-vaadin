@@ -2,6 +2,7 @@ package com.dala.taboo;
 
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.html.H3;
+import com.vaadin.flow.component.orderedlayout.FlexComponent;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.upload.Upload;
 import com.vaadin.flow.component.upload.receivers.MultiFileMemoryBuffer;
@@ -56,10 +57,10 @@ public class UploadView extends VerticalLayout {
 
     private void style() {
         setSizeFull();
-        setJustifyContentMode(JustifyContentMode.CENTER);
-        setDefaultHorizontalComponentAlignment(Alignment.CENTER);
-        setAlignItems(Alignment.CENTER);
-        setHorizontalComponentAlignment(Alignment.CENTER);
+        setJustifyContentMode(FlexComponent.JustifyContentMode.CENTER);
+        setDefaultHorizontalComponentAlignment(FlexComponent.Alignment.CENTER);
+        setAlignItems(FlexComponent.Alignment.CENTER);
+        setHorizontalComponentAlignment(FlexComponent.Alignment.CENTER);
 
         getStyle().set("text-align", "center");
     }

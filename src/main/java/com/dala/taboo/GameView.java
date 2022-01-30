@@ -36,6 +36,7 @@ public class GameView extends VerticalLayout {
         newWord();
 
         ConfigurationService.teams.get(ConfigurationService.currentTeamIndex).getListOfUsers().get(ConfigurationService.teams.get(ConfigurationService.currentTeamIndex).getPersonIndex()).addRound();
+        ConfigurationService.teams.get(ConfigurationService.currentTeamIndex).addRound();
 
         skipButton.setText("Next word");
         skippedWords.setText("Skipped Words: 0");
@@ -56,7 +57,7 @@ public class GameView extends VerticalLayout {
             GameState.correctWords++;
             correctWords.setText("Correct Words: " + GameState.correctWords);
             ConfigurationService.teams.get(ConfigurationService.currentTeamIndex).getListOfUsers().get(ConfigurationService.teams.get(ConfigurationService.currentTeamIndex).getPersonIndex()).addScore();
-            ConfigurationService.teams.get(ConfigurationService.currentTeamIndex).setScore(ConfigurationService.teams.get(ConfigurationService.currentTeamIndex).getScore() + 1);
+            ConfigurationService.teams.get(ConfigurationService.currentTeamIndex).addScore();
         });
 
         add(word, tabooWords, new HorizontalLayout(skipButton, correctButton), timeLeft, correctWords, skippedWords);
@@ -88,7 +89,7 @@ public class GameView extends VerticalLayout {
             getUI().ifPresent(event -> {
                 notification = Notification.show("All words shown!", 5000, Notification.Position.BOTTOM_CENTER);
                 notification.addThemeVariants(NotificationVariant.LUMO_PRIMARY);
-                getUI().get().navigate("queue");
+                getUI().get().navigate("results");
             });
             return;
         }
