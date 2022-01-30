@@ -6,6 +6,8 @@ import com.vaadin.flow.component.Text;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.html.H1;
 import com.vaadin.flow.component.html.Paragraph;
+import com.vaadin.flow.component.notification.Notification;
+import com.vaadin.flow.component.notification.NotificationVariant;
 import com.vaadin.flow.component.orderedlayout.FlexComponent;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
@@ -24,12 +26,11 @@ public class ConfigView extends VerticalLayout {
     Paragraph sliderText = new Paragraph();
 
     Select<String> categorySelect = new Select<>();
-
-//    MultiSelectListBox<String> listBox = new MultiSelectListBox<>();
-
     Select<String> languageSelect = new Select<>();
 
     Button applyButton = new Button();
+
+    Notification notification = new Notification();
 
     public ConfigView() {
 
@@ -43,12 +44,19 @@ public class ConfigView extends VerticalLayout {
 
         String[] categories = DataService.getAllCategories();
         categorySelect.setItems(categories);
+        categorySelect.setEmptySelectionAllowed(false);
+        teamOne.setRequiredIndicatorVisible(true);
+        teamOne.setErrorMessage("This field is required");
 //        listBox.setItems(categories);
 
         String[] languages = DataService.getAllLanguages();
         languageSelect.setItems(languages);
+        languageSelect.setEmptySelectionAllowed(false);
+        teamOne.setRequiredIndicatorVisible(true);
+        teamOne.setErrorMessage("This field is required");
 
-        add(categorySelect, /*listBox, */languageSelect);
+        if (!ConfigurationService.customGame)
+            add(categorySelect, /*listBox, */languageSelect);
 
         paperSlider.addValueChangeListener(event -> {
             timePerRoundText.setText(paperSlider.getValue().toString());
@@ -63,12 +71,26 @@ public class ConfigView extends VerticalLayout {
 
         teamOne.setLabel("Team 1");
         teamOne.setPlaceholder("User1, user2, USER3");
+        teamOne.setMinLength(1);
+        teamOne.setRequiredIndicatorVisible(true);
+        teamOne.setErrorMessage("This field is required");
 
         teamTwo.setLabel("Team 2");
+        teamTwo.setMinLength(1);
+        teamTwo.setRequiredIndicatorVisible(true);
+        teamTwo.setErrorMessage("This field is required");
+
         add(sliderText, new HorizontalLayout(paperSlider, timePerRoundText), teamOne, teamTwo);
+
 
         applyButton.setText("Apply Configuration");
         applyButton.addClickListener(event -> {
+            if (teamTwo.isEmpty() || teamOne.isEmpty() || ((categorySelect.isEmpty() || languageSelect.isEmpty()) && !ConfigurationService.customGame)) {
+                notification = Notification.show("Please fill out all Fields!", 5000, Notification.Position.BOTTOM_CENTER);
+                notification.addThemeVariants(NotificationVariant.LUMO_ERROR);
+                return;
+            }
+
             ConfigurationService.addPersonsToTeam(0, teamOne.getValue(), "Team 1");
             ConfigurationService.addPersonsToTeam(1, teamTwo.getValue(), "Team 2");
             ConfigurationService.roundLength = paperSlider.getValue();
