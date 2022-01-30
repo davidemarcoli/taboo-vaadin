@@ -10,9 +10,6 @@ import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.page.Push;
 import com.vaadin.flow.router.Route;
-import com.vaadin.flow.spring.annotation.SpringComponent;
-import org.springframework.beans.factory.config.ConfigurableBeanFactory;
-import org.springframework.context.annotation.Scope;
 
 @Push
 @Route(value = "game")
@@ -106,7 +103,7 @@ public class GameView extends VerticalLayout {
             getUI().ifPresent(event -> {
                 notification = Notification.show("All words shown!", 5000, Notification.Position.BOTTOM_CENTER);
                 notification.addThemeVariants(NotificationVariant.LUMO_PRIMARY);
-                getUI().get().navigate("queue");
+                getUI().get().navigate("results");
             });
             return;
         }

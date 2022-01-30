@@ -1,6 +1,7 @@
 package com.dala.taboo;
 
 import lombok.Data;
+import lombok.ToString;
 
 import java.util.ArrayList;
 
@@ -10,6 +11,7 @@ import java.util.ArrayList;
  **/
 
 @Data
+@ToString
 public class Team {
     private ArrayList<Person> listOfUsers = new ArrayList<>();
     private int score = 0;

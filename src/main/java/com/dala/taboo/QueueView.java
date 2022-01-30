@@ -1,7 +1,11 @@
 package com.dala.taboo;
 
 import com.vaadin.flow.component.button.Button;
-import com.vaadin.flow.component.html.*;
+import com.vaadin.flow.component.confirmdialog.ConfirmDialog;
+import com.vaadin.flow.component.html.H1;
+import com.vaadin.flow.component.html.H3;
+import com.vaadin.flow.component.html.ListItem;
+import com.vaadin.flow.component.html.UnorderedList;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.router.Route;
@@ -19,8 +23,10 @@ public class QueueView extends VerticalLayout {
     H3 player = new H3();
 
     Button startButton = new Button();
+    Button resultsButton = new Button();
 
     HorizontalLayout scoresLayout = new HorizontalLayout();
+    HorizontalLayout buttonLayout = new HorizontalLayout();
 
     Random rand = new Random();
 
@@ -33,7 +39,23 @@ public class QueueView extends VerticalLayout {
 
         startButton.setText("Start Round!");
         startButton.addClickListener(event -> startButton.getUI().ifPresent(ui -> ui.navigate("game")));
-        add(startButton);
+
+        ConfirmDialog dialog = new ConfirmDialog();
+        dialog.setHeader("Attention!");
+        dialog.setText("Do you really want to go to results and end the game?");
+
+        dialog.setCancelable(true);
+
+        dialog.setConfirmText("End Game");
+        dialog.addConfirmListener(event -> startButton.getUI().ifPresent(ui -> ui.navigate("results")));
+
+        resultsButton.setText("Go to results!");
+        resultsButton.addClickListener(event -> {
+            dialog.open();
+        });
+
+        buttonLayout.add(startButton, resultsButton);
+        add(buttonLayout);
 
         for (int i = 0; i < ConfigurationService.teams.size(); i++) {
             H3 totalScore = new H3(ConfigurationService.teams.get(i).getScore() + " points");

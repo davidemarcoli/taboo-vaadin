@@ -23,7 +23,7 @@ import java.util.List;
 @Route(value = "config")
 public class ConfigView extends VerticalLayout {
     H1 title = new H1();
-    PaperSlider paperSlider = new PaperSlider(30, 120, 60);
+    PaperSlider paperSlider = new PaperSlider(5, 120, 60);
     Text timePerRoundText = new Text("60");
     TextField teamOne = new TextField();
     TextField teamTwo = new TextField();
