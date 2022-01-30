@@ -63,14 +63,15 @@ public class ResultsView extends VerticalLayout {
     }
 
     private String getWinnerTeam() {
-        for (int i = 0; i < ConfigurationService.teams.size(); i++) {
-            if (ConfigurationService.teams.get(i).getScore() > ConfigurationService.teams.get(i + 1).getScore()) {
-                return ConfigurationService.teams.get(i).getTeamName();
-            } else {
-                return ConfigurationService.teams.get(i + 1).getTeamName();
+        Team winnerTeam = ConfigurationService.teams.get(0);
+
+        for (int i = 1; i < ConfigurationService.teams.size(); i++) {
+            if (winnerTeam.getScore() > ConfigurationService.teams.get(i).getScore()) {
+                winnerTeam = ConfigurationService.teams.get(i);
             }
         }
-        return null;
+
+        return winnerTeam.getTeamName();
     }
 
     private final SerializableBiConsumer<Span, Person> statusComponentUpdater = (span, person) -> {
