@@ -35,14 +35,12 @@ public class TimeManagement implements Runnable {
         System.out.println("Start: " + start);
         System.out.println("End: " + end);
 
-        while (now().isBefore(end)/*&& !QuizManager.enteredAnswer*/) {
+        while (now().isBefore(end)) {
             try {
                 Thread.sleep(100);
 
-            //GameView.timeLeft.setText(String.valueOf(end.toSecondOfDay() - now().toSecondOfDay()));
             ui.access(() -> {
                 gameView.timeLeft.setText(String.valueOf(end.toSecondOfDay() - now().toSecondOfDay()) + " seconds left");
-                //gameView.timeLeft.setText(String.format("%1$3s", end.toSecondOfDay() - now().toSecondOfDay()) + " seconds left");
             });
             } catch (InterruptedException ignored) {}
         }
@@ -56,9 +54,6 @@ public class TimeManagement implements Runnable {
         ui.access(() -> {
             gameView.navigate("queue");
         } );
-
-
-
 
         synchronized (this) {
             System.out.println("Timer synchronized");
@@ -74,6 +69,9 @@ public class TimeManagement implements Runnable {
         this.gameView = gameView;
     }
 
+    /**
+     * @return amount of seconds left
+     */
     public static long secondsLeft() {
         return end.toSecondOfDay() - now().toSecondOfDay();
     }

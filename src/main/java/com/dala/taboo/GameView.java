@@ -10,9 +10,6 @@ import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.page.Push;
 import com.vaadin.flow.router.Route;
-import com.vaadin.flow.spring.annotation.SpringComponent;
-import org.springframework.beans.factory.config.ConfigurableBeanFactory;
-import org.springframework.context.annotation.Scope;
 
 @Push
 @Route(value = "game")
@@ -47,26 +44,10 @@ public class GameView extends VerticalLayout {
             newWord();
             GameState.skippedWords++;
             skippedWords.setText("Skipped Words: " + GameState.skippedWords);
-
-            /*
-            if (skipButton.getText().contains("Start")) {
-                startTimer();
-                correctWords.setText("Correct Words: " + GameState.correctWords);
-                correctWords.setVisible(true);
-                skippedWords.setVisible(true);
-                skipButton.setText("Next word");
-                correctButton.setVisible(true);
-            } else {
-                GameState.skippedWords++;
-            }*/
         });
 
-        //correctWords.setVisible(false);
-        //skippedWords.setVisible(false);
         correctButton.setText("Correct");
         correctWords.setText("Correct Words: " + GameState.correctWords);
-
-        //correctButton.setVisible(false);
         correctButton.getStyle().set("background-color", "green");
         correctButton.getStyle().set("color", "black");
         correctButton.getStyle().set("font-weight", "700");
@@ -80,12 +61,13 @@ public class GameView extends VerticalLayout {
 
         add(word, tabooWords, new HorizontalLayout(skipButton, correctButton), timeLeft, correctWords, skippedWords);
         System.out.println("It should now all be added!");
-
-        style();
-
         startTimer();
+        style();
     }
 
+    /**
+     * Timer powered by a java thread
+     */
     public void startTimer() {
         try {
             timer.interrupt();

@@ -17,11 +17,8 @@ After every round the players will be sent in a queue page where they can see wh
 decide together weather they want to continue or quit the game to see some cool game stats like the MVP and the winner team. 
 
 ### Other
-Feel free to try out our [game](taboo.davidemarcoli.de) :)
-
 We designed a [Figma sketch](https://www.figma.com/file/oQvgs21FXPOLCQx47sUa1s/Taboo?node-id=0%3A1) which helped us to 
 assign issues in github by splitting tasks by the visible components. 
-
 
 --------------------------------------------------------------------------------------------------
 

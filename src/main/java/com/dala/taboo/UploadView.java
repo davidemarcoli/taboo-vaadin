@@ -38,19 +38,12 @@ public class UploadView extends VerticalLayout {
                 System.out.println("JSON");
                 DataService.addStream(inputStream);
             }
-
-
-            // Do something with the file data
-            // processFile(inputStream, fileName);
         });
 
         Button toGame = new Button();
         toGame.setText("Apply configuration");
 
-
         toGame.addClickListener(event -> {
-//            UI.getCurrent().navigate(GameView.class);
-
             DataService.printAll();
             toGame.getUI().ifPresent(ui -> ui.navigate("config"));
         });

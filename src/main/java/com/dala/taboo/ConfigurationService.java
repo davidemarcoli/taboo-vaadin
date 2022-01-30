@@ -7,18 +7,21 @@ import java.util.Random;
 /**
  * Created by lazar on 1/25/2022.
  * Project name: taboo-vaadin
- **/
+ */
 public class ConfigurationService {
     public static int roundLength = 60;
-//    public static Team team1 = new Team();
-//    public static Team team2 = new Team();
     public static ArrayList<Team> teams = new ArrayList<>(List.of(new Team[]{new Team(), new Team()}));
     public static int currentTeamIndex = -1;
-
     public static boolean customGame = false;
-
     private static final Random rand = new Random();
 
+    /**
+     * Add persons to team.
+     *
+     * @param teamIndex the team index
+     * @param players   the players
+     * @param teamName  the team name
+     */
     public static void addPersonsToTeam(int teamIndex, String players, String teamName) {
         String[] splittedPlayers = players.split(",");
 
@@ -31,6 +34,9 @@ public class ConfigurationService {
         System.out.println(teams.get(teamIndex).getListOfUsers().toString());
     }
 
+    /**
+     * Sets next round.
+     */
     public static void setNextRound() {
         if (currentTeamIndex == -1) {
             currentTeamIndex = rand.nextInt(teams.size());
