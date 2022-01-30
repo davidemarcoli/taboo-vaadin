@@ -1,5 +1,6 @@
 package com.dala.taboo;
 
+import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.html.H1;
 import com.vaadin.flow.component.html.H3;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
@@ -14,12 +15,17 @@ import com.vaadin.flow.router.Route;
 public class ResultsView extends VerticalLayout {
     H1 title = new H1();
     H1 winnerTeam = new H1();
+    Button returnToHomeBtn = new Button();
 
     public ResultsView() {
         title.setText("Taboo");
         winnerTeam.setText(getWinnerTeam() + " won the game!");
+        returnToHomeBtn.setText("Return to home");
+        returnToHomeBtn.addClickListener(event -> {
+            returnToHomeBtn.getUI().ifPresent(ui -> ui.navigate("/"));
+        });
         style();
-        add(title, winnerTeam);
+        add(title, winnerTeam, returnToHomeBtn);
     }
 
     private String getWinnerTeam() {
