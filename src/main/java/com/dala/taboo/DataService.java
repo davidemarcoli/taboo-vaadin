@@ -25,10 +25,22 @@ public class DataService {
     private static final Gson gson = new Gson();
     private static final Random rand = new Random();
 
+    /**
+     * Add an InputStream to the files ArrayList.
+     * @param is The InputStream to add.
+     */
     public static void addStream(InputStream is) {
         files.add(is);
     }
 
+    /**
+     * This Method gets all Files from a Zip File.
+     * @Deprecated This method is deprecated and Not usable anymore.
+     * @param file The Zip File to get the files from.
+     * @throws IOException If the Zip File is not found.
+     */
+
+    @Deprecated
     public static void addZip(File file) throws IOException {
         ZipFile zipFile = new ZipFile(file);
 

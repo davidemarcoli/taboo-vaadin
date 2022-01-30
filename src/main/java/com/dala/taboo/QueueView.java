@@ -102,6 +102,9 @@ public class QueueView extends VerticalLayout {
         player.setText(ConfigurationService.teams.get(ConfigurationService.currentTeamIndex).getListOfUsers().get(playerIndex).getUsername());
     }
 
+    /**
+     * Style the view
+     */
     private void style() {
         setSizeFull();
         setJustifyContentMode(JustifyContentMode.CENTER);
@@ -110,6 +113,11 @@ public class QueueView extends VerticalLayout {
         getStyle().set("text-align", "center");
     }
 
+    /**
+     * Get scores for each team and per person
+     * @param team The team to get scores for
+     * @return ArrayList of scores of the different players in the team
+     */
     private ArrayList<String> getScores(Team team) {
         ArrayList<String> scores = new ArrayList<>();
 

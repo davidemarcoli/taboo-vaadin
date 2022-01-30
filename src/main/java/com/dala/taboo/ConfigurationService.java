@@ -16,11 +16,11 @@ public class ConfigurationService {
     private static final Random rand = new Random();
 
     /**
-     * Add persons to team.
+     * Add persons to a team.
      *
-     * @param teamIndex the team index
-     * @param players   the players
-     * @param teamName  the team name
+     * @param teamIndex the team index to add to
+     * @param players   the players to add
+     * @param teamName  the team name to set
      */
     public static void addPersonsToTeam(int teamIndex, String players, String teamName) {
         String[] splittedPlayers = players.split(",");
@@ -35,7 +35,9 @@ public class ConfigurationService {
     }
 
     /**
-     * Sets next round.
+     * Sets next round based on the current team index.
+     * If the current team index is the last one, it will set it to 0.
+     * Else it will increment it by 1.
      */
     public static void setNextRound() {
         if (currentTeamIndex == -1) {

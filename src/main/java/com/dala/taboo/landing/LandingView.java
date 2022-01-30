@@ -41,6 +41,9 @@ public class LandingView extends VerticalLayout {
         });
     }
 
+    /**
+     * Styling of the components
+     */
     private void style() {
         setSizeFull();
         setJustifyContentMode(JustifyContentMode.CENTER);

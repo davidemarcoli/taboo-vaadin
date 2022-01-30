@@ -67,7 +67,7 @@ public class GameView extends VerticalLayout {
     }
 
     /**
-     * Timer powered by a java thread
+     * Timer powered by a java thread that updates the time left every second.
      */
     public void startTimer() {
         try {
@@ -77,11 +77,19 @@ public class GameView extends VerticalLayout {
         timer.start();
     }
 
+    /**
+     * Navigate to the specified view.
+     * @param location The view to navigate to.
+     */
     public void navigate(String location) {
         System.out.println("Navigating to " + location);
         UI.getCurrent().navigate(location);
     }
 
+    /**
+     * Pick a new word and update the UI.
+     * If there are no more words, navigate to the end screen.
+     */
     public void newWord() {
         currentWord = DataService.getRandomWord();
         System.out.println(currentWord);
@@ -101,6 +109,9 @@ public class GameView extends VerticalLayout {
         }
     }
 
+    /**
+     * Style the UI.
+     */
     private void style() {
         setSizeFull();
         setJustifyContentMode(JustifyContentMode.CENTER);

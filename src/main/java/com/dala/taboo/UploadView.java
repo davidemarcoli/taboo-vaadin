@@ -55,6 +55,9 @@ public class UploadView extends VerticalLayout {
         ));
     }
 
+    /**
+     * Style the layout
+     */
     private void style() {
         setSizeFull();
         setJustifyContentMode(FlexComponent.JustifyContentMode.CENTER);

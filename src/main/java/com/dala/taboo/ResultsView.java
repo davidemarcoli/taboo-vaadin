@@ -93,6 +93,9 @@ public class ResultsView extends VerticalLayout {
 //        return winnerTeam.getTeamName();
 //    }
 
+    /**
+     * Generates MVP-Label the specified person
+     */
     private final SerializableBiConsumer<Span, Person> statusComponentUpdater = (span, person) -> {
         boolean isMVP = mvps.contains(person);
         String theme = String.format("badge %s", isMVP ? "success" : "error");
@@ -100,10 +103,18 @@ public class ResultsView extends VerticalLayout {
         span.setText(isMVP ? "MVP" : "");
     };
 
+    /**
+     * Creates a renderer for the MVP-Label
+     * @return the renderer
+     */
     private ComponentRenderer<Span, Person> createStatusComponentRenderer() {
         return new ComponentRenderer<>(Span::new, statusComponentUpdater);
     }
 
+    /**
+     * Gets the winner teams based on the score
+     * @return the winner teams
+     */
     private ArrayList<Team> getWinnerTeams() {
         ArrayList<Team> winnerTeams = new ArrayList<>();
         double highestAverageScore = 0;
@@ -134,6 +145,10 @@ public class ResultsView extends VerticalLayout {
         return winnerTeams;
     }
 
+    /**
+     * Gets the MVPs based on the average score per round played
+     * @return the MVPs of the game
+     */
     private ArrayList<Person> getMVPs() {
         ArrayList<Person> people = new ArrayList<>();
 
@@ -170,6 +185,9 @@ public class ResultsView extends VerticalLayout {
         return mvps;
     }
 
+    /**
+     * Styles the page
+     */
     private void style() {
         setSizeFull();
         setJustifyContentMode(JustifyContentMode.CENTER);

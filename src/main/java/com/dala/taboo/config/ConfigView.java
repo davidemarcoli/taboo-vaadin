@@ -103,6 +103,9 @@ public class ConfigView extends VerticalLayout {
         style();
     }
 
+    /**
+     * Styling of the components.
+     */
     private void style() {
         setSizeFull();
         setJustifyContentMode(FlexComponent.JustifyContentMode.CENTER);
