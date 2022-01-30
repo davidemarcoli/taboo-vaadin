@@ -28,30 +28,25 @@ public class ConfigView extends VerticalLayout {
     TextField teamOne = new TextField();
     TextField teamTwo = new TextField();
     Paragraph sliderText = new Paragraph();
-
     Select<String> categorySelect = new Select<>();
     Select<String> languageSelect = new Select<>();
-
     Button applyButton = new Button();
-
     Notification notification = new Notification();
 
+    /**
+     * Instantiates a new Config view.
+     */
     public ConfigView() {
-
         categorySelect.setPlaceholder("Category");
         languageSelect.setPlaceholder("Language");
-
         title.setText("Taboo");
         add(title);
-
-//        Integer.parseInt(timePerRoundText.getText());
 
         String[] categories = DataService.getAllCategories();
         categorySelect.setItems(categories);
         categorySelect.setEmptySelectionAllowed(false);
         teamOne.setRequiredIndicatorVisible(true);
         teamOne.setErrorMessage("This field is required");
-//        listBox.setItems(categories);
 
         String[] languages = DataService.getAllLanguages();
         languageSelect.setItems(languages);
@@ -60,7 +55,7 @@ public class ConfigView extends VerticalLayout {
         teamOne.setErrorMessage("This field is required");
 
         if (!ConfigurationService.customGame)
-            add(categorySelect, /*listBox, */languageSelect);
+            add(categorySelect, languageSelect);
 
         paperSlider.addValueChangeListener(event -> {
             timePerRoundText.setText(paperSlider.getValue().toString());
@@ -105,7 +100,6 @@ public class ConfigView extends VerticalLayout {
             applyButton.getUI().ifPresent(ui -> ui.navigate("queue"));
         });
         add(applyButton);
-
         style();
     }
 

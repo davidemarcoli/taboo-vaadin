@@ -21,7 +21,7 @@ import java.util.Random;
 public class QueueView extends VerticalLayout {
     H1 title = new H1();
     H3 player = new H3();
-
+    H3 playerDescription = new H3();
     Button startButton = new Button();
     Button resultsButton = new Button();
 
@@ -34,8 +34,12 @@ public class QueueView extends VerticalLayout {
         title.setText("Taboo");
         add(title);
 
+        playerDescription.setText("It's now the turn of");
+        player.getStyle().set("color", "orange");
+        player.getStyle().set("margin-left", "5px");
+
         getRandomPlayer();
-        add(player);
+        add(new HorizontalLayout(playerDescription, player));
 
         startButton.setText("Start Round!");
         startButton.addClickListener(event -> startButton.getUI().ifPresent(ui -> ui.navigate("game")));
@@ -63,15 +67,13 @@ public class QueueView extends VerticalLayout {
             totalScore.getStyle().set("font-weight", "bold");
             totalScore.getStyle().set("font-size", "1em");
 
+            scoresLayout.getStyle().set("width", "250px");
             scoresLayout.add(new VerticalLayout(new H3(ConfigurationService.teams.get(i).getTeamName()),
-                    new UnorderedList(getScores(ConfigurationService.teams.get(i)).toArray(new ListItem[0])),
+                    new VerticalLayout(getScores(ConfigurationService.teams.get(i)).toArray(new ListItem[0])),
                     totalScore));
         }
-
         add(scoresLayout);
-
         style();
-
     }
 
     /**
@@ -80,7 +82,7 @@ public class QueueView extends VerticalLayout {
     public void getRandomPlayer() {
         ConfigurationService.setNextRound();
         int playerIndex = ConfigurationService.teams.get(ConfigurationService.currentTeamIndex).getPersonIndex();
-        player.setText("It's now the turn of " + ConfigurationService.teams.get(ConfigurationService.currentTeamIndex).getListOfUsers().get(playerIndex).getUsername());
+        player.setText(ConfigurationService.teams.get(ConfigurationService.currentTeamIndex).getListOfUsers().get(playerIndex).getUsername());
     }
 
     private void style() {
@@ -97,9 +99,6 @@ public class QueueView extends VerticalLayout {
         for (int i = 0; i < team.getListOfUsers().size(); i++) {
             scores.add(new ListItem(team.getListOfUsers().get(i).getUsername() + ": " + team.getListOfUsers().get(i).getScore()));
         }
-
-//        scores.add(new ListItem("Total: " + team.getScore()));
-
         return scores;
     }
 }

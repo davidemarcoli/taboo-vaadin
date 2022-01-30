@@ -21,10 +21,7 @@ import java.util.zip.ZipFile;
 @Log4j2
 public class DataService {
     static Map<String, ArrayList<String>> data = new HashMap<>();
-//    static ArrayList<TabooWord> words = new ArrayList<>();
-
     static ArrayList<InputStream> files = new ArrayList<>();
-
     private static final Gson gson = new Gson();
     private static final Random rand = new Random();
 
@@ -39,29 +36,14 @@ public class DataService {
 
         while (entries.hasMoreElements()) {
             ZipEntry entry = entries.nextElement();
-
             if (entry.isDirectory()) {
-
             }
-
             InputStream stream = zipFile.getInputStream(entry);
-
         }
     }
 
     @SneakyThrows
     public static String[] getAllCategories() {
-//        InputStream in = DataService.class.getClassLoader().getResourceAsStream("classpath:data" + File.separator + "de");
-
-//        InputStream is = DataService.class.getResourceAsStream("3Columns.csv");
-//        InputStreamReader isr = new InputStreamReader(is);
-//        BufferedReader br = new BufferedReader(isr);
-
-//        File dir = ResourceUtils.getFile("classpath:data" + File.separator + "de");
-
-//        File dir = new File(Objects.requireNonNull(DataService.class.getResource("data" + File.separator + "de")).toURI());
-
-//        File dir = new File("classpath:data/de");
         File dir = ResourceUtils.getFile("classpath:data/de");
 
         String[] fileNames = getFiles(Objects.requireNonNull(dir.listFiles()));
@@ -82,11 +64,8 @@ public class DataService {
 
         for (File file : files) {
             if (file.isDirectory()) {
-//                System.out.println("Directory: " + file.getAbsolutePath());
                 getFiles(Objects.requireNonNull(file.listFiles())); // Calls same method again.
             } else {
-//                System.out.println("File: " + file.getAbsolutePath());
-//                String fileName = file.getAbsolutePath().replaceAll("\\", "\\\\");
                 String[] pathSplit = file.getAbsolutePath().split(Pattern.quote("\\"));
                 String fileName = pathSplit[pathSplit.length - 1].split("\\.")[0];
                 filesNames.add(fileName.substring(0, 1).toUpperCase() + fileName.substring(1));
@@ -106,7 +85,6 @@ public class DataService {
                 folderNames.add(fileName.substring(0, 1).toUpperCase() + fileName.substring(1));
             }
         }
-
         return folderNames.toArray(new String[0]);
     }
 
@@ -127,31 +105,14 @@ public class DataService {
             String contents = null;
             try {
                 contents = IOUtils.toString(is, StandardCharsets.UTF_8);
-//                System.out.println(contents);
-
-//                Map result = gson.fromJson(contents, Map.class);
-//                Map<String, String[]> result2 = new ObjectMapper().readValue(contents, HashMap.class);
                 Map<String, ArrayList<String>> result2 = new ObjectMapper().readValue(contents, HashMap.class);
-//                Map<String, String[]> typedMap = new ObjectMapper().readValue(contents, new TypeReference<Map<String, String[]>>() {});
-//                log.info("Result HM: " + result);
                 log.info("Result HM2: " + result2);
-//                log.info("Result HM3: " + typedMap);
-//
-//                ArrayList<String> keysAsArray = new ArrayList<>(result.keySet());
-//                log.info("Keys: " + keysAsArray);
-//
-//                for (String key : keysAsArray) {
-//                    words.add(new TabooWord(key, result.get(key)));
-//                }
-
 
                 data.putAll(result2);
-//                System.out.println(data);
 
             } catch (IOException e) {
                 e.printStackTrace();
             }
-
         }
     }
 
