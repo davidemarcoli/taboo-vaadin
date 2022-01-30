@@ -28,4 +28,8 @@ public class Person {
     public void addRound() {
         this.rounds++;
     }
+
+    public double getAveragePointsPerRound() {
+        return (double) this.score / (double) this.rounds;
+    }
 }

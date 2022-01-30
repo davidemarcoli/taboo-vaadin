@@ -23,13 +23,26 @@ public class ResultsView extends VerticalLayout {
     H1 winnerTeam = new H1();
     Button returnToHomeBtn = new Button();
 
-//    ArrayList<Person> mvps = getMVPs();
-    ArrayList<Person> mvps = new ArrayList<>();
+    ArrayList<Person> mvps = getMVPs();
+//    ArrayList<Person> mvps = new ArrayList<>();
     HorizontalLayout gridLayout = new HorizontalLayout();
 
     public ResultsView() {
         title.setText("Taboo");
-        winnerTeam.setText(getWinnerTeam() + " won the game!");
+
+        ArrayList<Team> winnerTeams = getWinnerTeams();
+
+        StringBuilder winnerTeamName = new StringBuilder();
+
+        for (int i = 0; i < winnerTeams.size(); i++) {
+            if (i < winnerTeams.size() - 1) {
+                winnerTeamName.append(winnerTeams.get(i).getTeamName()).append(", ");
+            } else {
+                winnerTeamName.append(winnerTeams.get(i).getTeamName());
+            }
+        }
+
+        winnerTeam.setText(winnerTeamName + " won the game!");
         returnToHomeBtn.setText("Return to home");
         returnToHomeBtn.addClickListener(event -> {
             returnToHomeBtn.getUI().ifPresent(ui -> ui.navigate("/"));
@@ -45,8 +58,10 @@ public class ResultsView extends VerticalLayout {
             grid.addColumn(Person::getUsername).setHeader("Username")
                     .setFooter(String.format("%s total members", team.getListOfUsers().size()))
                     .setAutoWidth(true).setFlexGrow(0);
-            grid.addColumn(Person::getScore).setHeader("Score")
+            grid.addColumn(Person::getAveragePointsPerRound).setHeader("Average Score")
                     .setFooter(String.format("%s points", team.getScore()))
+                    .setAutoWidth(true);
+            grid.addColumn(Person::getRounds).setHeader("Rounds")
                     .setAutoWidth(true);
             grid.addColumn(createStatusComponentRenderer()).setHeader("MVP")
                     .setAutoWidth(true);
@@ -85,11 +100,34 @@ public class ResultsView extends VerticalLayout {
         return new ComponentRenderer<>(Span::new, statusComponentUpdater);
     }
 
-    private void style() {
-        setSizeFull();
-        setJustifyContentMode(JustifyContentMode.CENTER);
-        setAlignItems(Alignment.CENTER);
-        getStyle().set("text-align", "center");
+    private ArrayList<Team> getWinnerTeams() {
+        ArrayList<Team> winnerTeams = new ArrayList<>();
+        double highestAverageScore = 0;
+
+
+        for (Team team : ConfigurationService.teams) {
+            if (winnerTeams.size() == 0) {
+                winnerTeams.add(team);
+            }
+
+            boolean added = false;
+
+            if ((double) team.getScore() / (double) team.getRounds() > highestAverageScore) {
+                winnerTeams = new ArrayList<>();
+                highestAverageScore = team.getScore();
+
+                if (!added) {
+                    winnerTeams.add(team);
+                }
+
+            } else if ((double) team.getScore() / (double) team.getRounds() == highestAverageScore) {
+                if (!added) {
+                    winnerTeams.add(team);
+                }
+            }
+        }
+
+        return winnerTeams;
     }
 
     private ArrayList<Person> getMVPs() {
@@ -100,6 +138,7 @@ public class ResultsView extends VerticalLayout {
         }
 
         ArrayList<Person> mvps = new ArrayList<>();
+        double highestAverageScore = 0;
 
 
         for (Person p : people) {
@@ -107,25 +146,30 @@ public class ResultsView extends VerticalLayout {
                 mvps.add(p);
             }
 
-            for (Person mvp: mvps) {
+            boolean added = false;
 
-                boolean added = false;
+            if ((double) p.getScore() / (double) p.getRounds() > highestAverageScore) {
+                mvps = new ArrayList<>();
+                highestAverageScore = (double) p.getScore() / (double) p.getRounds();
 
-                if (p.getScore() > mvp.getScore()) {
+                if (!added) {
+                    mvps.add(p);
+                }
 
-                    if (!added) {
-                        mvps.add(p);
-                    }
-                    mvps.remove(mvp);
-
-                } else if (p.getScore() == mvp.getScore()) {
-                    if (!added) {
-                        mvps.add(p);
-                    }
+            } else if ((double) p.getScore() / (double) p.getRounds() == highestAverageScore) {
+                if (!added) {
+                    mvps.add(p);
                 }
             }
         }
 
         return mvps;
+    }
+
+    private void style() {
+        setSizeFull();
+        setJustifyContentMode(JustifyContentMode.CENTER);
+        setAlignItems(Alignment.CENTER);
+        getStyle().set("text-align", "center");
     }
 }

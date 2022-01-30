@@ -98,7 +98,10 @@ public class ConfigView extends VerticalLayout {
             ConfigurationService.addPersonsToTeam(0, teamOne.getValue(), "Team 1");
             ConfigurationService.addPersonsToTeam(1, teamTwo.getValue(), "Team 2");
             ConfigurationService.roundLength = paperSlider.getValue();
-            DataService.insertWords(categorySelect.getValue(), languageSelect.getValue());
+
+            if (!ConfigurationService.customGame)
+                DataService.insertWords(categorySelect.getValue(), languageSelect.getValue());
+
             applyButton.getUI().ifPresent(ui -> ui.navigate("queue"));
         });
         add(applyButton);
