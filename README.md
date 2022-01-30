@@ -1,17 +1,31 @@
-# Taboo project - Lazar & Davide
+# Taboo web game - Lazar & Davide
 
-[Figma sketch](https://www.figma.com/file/oQvgs21FXPOLCQx47sUa1s/Taboo?node-id=0%3A1)
+We developed our web game using Vaadin which is a framework that can be used in java to create web apps using HTML 
+elements as Java objects and spring boot mechanics for page routing. 
+
+### About the game
+A group of at least two players sit together and launch the game on one device. The user can configure a game by 
+choosing our included game categories, or he can also import his own json file. 
+
+The program selects different players alternately to try to describe as many words as possible
+in a given time (can also be configured by the users :D ) The describer gets the device in order to see the word he has
+to describe, and the taboo words he is not allowed to say which makes the game hard and fun. If a word is too hard
+to explain / guess he can skip the words and gets no points. When someone from the describers group guesses the word the 
+describer can click on a button and the team will get a new word and one point for one guessed word. 
+
+After every round the players will be sent in a queue page where they can see which player can try his best to describe some new words. Then they can 
+decide together weather they want to continue or quit the game to see some cool game stats like the MVP and the winner team. 
+
+### Other
+Feel free to try out our [game](taboo.davidemarcoli.de) :)
+
+We designed a [Figma sketch](https://www.figma.com/file/oQvgs21FXPOLCQx47sUa1s/Taboo?node-id=0%3A1) which helped us to 
+assign issues in github by splitting tasks by the visible components. 
+
 
 --------------------------------------------------------------------------------------------------
 
 # Project Base for Vaadin and Spring Boot
-
-This project can be used as a starting point to create your own Vaadin application with Spring Boot.
-It contains all the necessary configuration and some placeholder files to get you started.
-
-The best way to create your own project based on this starter is via [start.
-vaadin.com](https://start.vaadin.com/).
-
 ## Running the Application
 The project is a standard Maven project. To run it from the command line, type `mvn` and open http://localhost:8080 in your browser.
 
