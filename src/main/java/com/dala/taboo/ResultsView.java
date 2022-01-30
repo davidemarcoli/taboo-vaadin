@@ -1,9 +1,11 @@
 package com.dala.taboo;
 
+import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.html.H1;
 import com.vaadin.flow.component.html.Span;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
+import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.data.renderer.ComponentRenderer;
 import com.vaadin.flow.function.SerializableBiConsumer;
 import com.vaadin.flow.router.Route;
@@ -16,8 +18,10 @@ import java.util.List;
  * Project name: taboo-vaadin
  **/
 @Route(value = "results")
-public class ResultsView extends HorizontalLayout {
+public class ResultsView extends VerticalLayout {
     H1 title = new H1();
+    H1 winnerTeam = new H1();
+    Button returnToHomeBtn = new Button();
 
 //    ArrayList<Person> mvps = getMVPs();
     ArrayList<Person> mvps = new ArrayList<>();
@@ -25,8 +29,13 @@ public class ResultsView extends HorizontalLayout {
 
     public ResultsView() {
         title.setText("Taboo");
-        style();
-        add(title);
+        winnerTeam.setText(getWinnerTeam() + " won the game!");
+        returnToHomeBtn.setText("Return to home");
+        returnToHomeBtn.addClickListener(event -> {
+            returnToHomeBtn.getUI().ifPresent(ui -> ui.navigate("/"));
+        });
+
+        add(title, winnerTeam, returnToHomeBtn);
 
 
         for (Team team : ConfigurationService.teams) {
@@ -50,6 +59,18 @@ public class ResultsView extends HorizontalLayout {
         gridLayout.setSizeFull();
         add(gridLayout);
 
+        style();
+    }
+
+    private String getWinnerTeam() {
+        for (int i = 0; i < ConfigurationService.teams.size(); i++) {
+            if (ConfigurationService.teams.get(i).getScore() > ConfigurationService.teams.get(i + 1).getScore()) {
+                return ConfigurationService.teams.get(i).getTeamName();
+            } else {
+                return ConfigurationService.teams.get(i + 1).getTeamName();
+            }
+        }
+        return null;
     }
 
     private final SerializableBiConsumer<Span, Person> statusComponentUpdater = (span, person) -> {
