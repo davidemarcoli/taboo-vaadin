@@ -1,17 +1,16 @@
 package com.dala.taboo;
 
+import com.vaadin.flow.component.HtmlComponent;
+import com.vaadin.flow.component.Text;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.confirmdialog.ConfirmDialog;
 import com.vaadin.flow.component.html.H1;
 import com.vaadin.flow.component.html.H3;
-import com.vaadin.flow.component.html.ListItem;
-import com.vaadin.flow.component.html.UnorderedList;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.router.Route;
 
 import java.util.ArrayList;
-import java.util.Random;
 
 /**
  * Created by lazar on 1/29/2022.
@@ -27,8 +26,6 @@ public class QueueView extends VerticalLayout {
 
     HorizontalLayout scoresLayout = new HorizontalLayout();
     HorizontalLayout buttonLayout = new HorizontalLayout();
-
-    Random rand = new Random();
 
     public QueueView() {
         title.setText("Taboo");
@@ -67,10 +64,30 @@ public class QueueView extends VerticalLayout {
             totalScore.getStyle().set("font-weight", "bold");
             totalScore.getStyle().set("font-size", "1em");
 
-            scoresLayout.getStyle().set("width", "250px");
-            scoresLayout.add(new VerticalLayout(new H3(ConfigurationService.teams.get(i).getTeamName()),
-                    new VerticalLayout(getScores(ConfigurationService.teams.get(i)).toArray(new ListItem[0])),
-                    totalScore));
+            scoresLayout.setDefaultVerticalComponentAlignment(Alignment.CENTER);
+
+            ArrayList<String> scores = getScores(ConfigurationService.teams.get(i));
+
+            VerticalLayout teamScoresLayout = new VerticalLayout();
+            teamScoresLayout.getStyle().set("padding", "0");
+
+            teamScoresLayout.add(new H3(ConfigurationService.teams.get(i).getTeamName()));
+
+            VerticalLayout scoreList = new VerticalLayout();
+            scoreList.getStyle().set("text-align", "left");
+            scoreList.getStyle().set("padding", "0");
+
+            for (String score : scores) {
+                HtmlComponent br = new HtmlComponent("br");
+                scoreList.add(new Text(score), br);
+            }
+
+            teamScoresLayout.add(scoreList);
+            teamScoresLayout.add(totalScore);
+
+            teamScoresLayout.getStyle().set("width", "100%");
+
+            scoresLayout.add(teamScoresLayout);
         }
         add(scoresLayout);
         style();
@@ -93,11 +110,11 @@ public class QueueView extends VerticalLayout {
         getStyle().set("text-align", "center");
     }
 
-    private ArrayList<ListItem> getScores(Team team) {
-        ArrayList<ListItem> scores = new ArrayList<>();
+    private ArrayList<String> getScores(Team team) {
+        ArrayList<String> scores = new ArrayList<>();
 
         for (int i = 0; i < team.getListOfUsers().size(); i++) {
-            scores.add(new ListItem(team.getListOfUsers().get(i).getUsername() + ": " + team.getListOfUsers().get(i).getScore()));
+            scores.add(team.getListOfUsers().get(i).getUsername() + ": " + team.getListOfUsers().get(i).getScore());
         }
         return scores;
     }
