@@ -31,15 +31,12 @@ public class QueueView extends VerticalLayout {
         title.setText("Taboo");
         add(title);
 
-
         getRandomPlayer();
         add(player);
 
         startButton.setText("Start Round!");
         startButton.addClickListener(event -> startButton.getUI().ifPresent(ui -> ui.navigate("game")));
         add(startButton);
-
-
 
         for (int i = 0; i < ConfigurationService.teams.size(); i++) {
             H3 totalScore = new H3(ConfigurationService.teams.get(i).getScore() + " points");

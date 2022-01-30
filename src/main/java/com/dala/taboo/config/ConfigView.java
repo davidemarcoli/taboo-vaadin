@@ -2,6 +2,7 @@ package com.dala.taboo.config;
 
 import com.dala.taboo.ConfigurationService;
 import com.dala.taboo.DataService;
+import com.dala.taboo.Team;
 import com.vaadin.flow.component.Text;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.html.H1;
@@ -13,6 +14,9 @@ import com.vaadin.flow.component.select.Select;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.router.Route;
 import org.vaadin.addon.sliders.PaperSlider;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Route(value = "config")
 public class ConfigView extends VerticalLayout {
@@ -69,6 +73,7 @@ public class ConfigView extends VerticalLayout {
 
         applyButton.setText("Apply Configuration");
         applyButton.addClickListener(event -> {
+            ConfigurationService.teams = new ArrayList<>(List.of(new Team[]{new Team(), new Team()}));
             ConfigurationService.addPersonsToTeam(0, teamOne.getValue(), "Team 1");
             ConfigurationService.addPersonsToTeam(1, teamTwo.getValue(), "Team 2");
             ConfigurationService.roundLength = paperSlider.getValue();
