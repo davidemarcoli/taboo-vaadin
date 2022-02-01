@@ -161,6 +161,10 @@ public class ResultsView extends VerticalLayout {
 
 
         for (Person p : people) {
+            if (p.getRounds() == 0) {
+                continue;
+            }
+
             if (mvps.size() == 0) {
                 mvps.add(p);
             }

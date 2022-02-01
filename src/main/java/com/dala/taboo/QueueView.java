@@ -41,18 +41,17 @@ public class QueueView extends VerticalLayout {
         startButton.setText("Start Round!");
         startButton.addClickListener(event -> startButton.getUI().ifPresent(ui -> ui.navigate("game")));
 
-        ConfirmDialog dialog = new ConfirmDialog();
-        dialog.setHeader("Attention!");
-        dialog.setText("Do you really want to go to results and end the game?");
-
-        dialog.setCancelable(true);
-
-        dialog.setConfirmText("End Game");
-        dialog.addConfirmListener(event -> startButton.getUI().ifPresent(ui -> ui.navigate("results")));
+//        ConfirmDialog dialog = new ConfirmDialog();
+//        dialog.setHeader("Attention!");
+//        dialog.setText("Do you really want to go to results and end the game?");
+//        dialog.setCancelable(true);
+//        dialog.setConfirmText("End Game");
+//        dialog.addConfirmListener(event -> startButton.getUI().ifPresent(ui -> ui.navigate("results")));
 
         resultsButton.setText("Go to results!");
         resultsButton.addClickListener(event -> {
-            dialog.open();
+//            dialog.open();
+            startButton.getUI().ifPresent(ui -> ui.navigate("results"));
         });
 
         buttonLayout.add(startButton, resultsButton);

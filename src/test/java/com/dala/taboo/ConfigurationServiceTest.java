@@ -16,7 +16,6 @@ import static org.junit.jupiter.api.Assertions.*;
  * Project name: taboo-vaadin
  **/
 class ConfigurationServiceTest {
-    private ArrayList<String> bal = new ArrayList<>();
     private String players = "Davide, Lazar";
 
     @BeforeEach
